@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
-import dayjs from "dayjs";
+import moment from 'moment';
+import 'moment/locale/zh-tw';
 
 import WeatherIcon from "./WeatherIcon";
 
@@ -119,7 +120,7 @@ const Refresh = styled.div`
 const WeatherCard = props => {
   const { weatherElement, moment: dayMoment, fetchData, setCurrentPage, cityName } = props;
   const {
-    observationTime,
+    observationTime, // 2020-03-02 15:00:00
     temperature,
     windSpeed,
     description,
@@ -128,6 +129,8 @@ const WeatherCard = props => {
     comfort,
     isLoading
   } = weatherElement;
+
+  moment.locale('zh-tw');
 
   return (
     <WeatherCardWrapper>
@@ -155,11 +158,8 @@ const WeatherCard = props => {
       </Rain>
       <Refresh onClick={fetchData} isLoading={isLoading}>
         最後觀測時間：
-        {new Intl.DateTimeFormat('zh-TW', {
-          hour: 'numeric',
-          minute: 'numeric',
-        }).format(dayjs(observationTime))}{' '}
-        {/* {moment(observationTime).format('a h:mm')} */}
+        {moment(observationTime, 'YYYY-MM-DD h:mm:ss').format('a h:mm')}
+        {' '}
         {isLoading ? <LoadingIcon /> : <RefreshIcon />}
       </Refresh>
     </WeatherCardWrapper>

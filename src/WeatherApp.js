@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import styled from "@emotion/styled";
 import { ThemeProvider } from "emotion-theming";
-import dayjs from 'dayjs';
+import moment from "moment";
 
 import sunriseSunsetData from "./sunrise-sunset.json";
 import WeatherCard from "./WeatherCard";
@@ -44,25 +44,18 @@ const getMoment = locationName => {
 
   if (!location) return null;
 
-  const now = dayjs();
-  const nowDate = Intl.DateTimeFormat("zh-TW", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  })
-    .format(now)
-    .replace(/\//g, "-");
+  const nowDate = moment().format('YYYY-MM-DD'); // 2019-10-08
 
   const locationDate =
     location.time && location.time.find(time => time.dataTime === nowDate);
 
-  const sunriseTimestamp = dayjs(
-    `${locationDate.dataTime} ${locationDate.sunrise}`
-  ).unix();
-  const sunsetTimestamp = dayjs(
-    `${locationDate.dataTime} ${locationDate.sunset}`
-  ).unix();
-  const nowTimeStamp = now.unix();
+  const sunriseTimestamp = moment(
+    `${locationDate.dataTime} ${locationDate.sunrise}`, 'YYYY-MM-DD h:mm:ss' // 2019-11-22 06:15:00
+  ).valueOf();
+  const sunsetTimestamp = moment(
+    `${locationDate.dataTime} ${locationDate.sunset}`, 'YYYY-MM-DD h:mm:ss' // 2019-11-22 06:15:00
+  ).valueOf();
+  const nowTimeStamp = moment().valueOf();
 
   return sunriseTimestamp <= nowTimeStamp && nowTimeStamp <= sunsetTimestamp
     ? "day"
