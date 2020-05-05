@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import dayjs from "dayjs";
 
 import WeatherIcon from "./WeatherIcon";
 
@@ -116,7 +117,7 @@ const Refresh = styled.div`
 `;
 
 const WeatherCard = props => {
-  const { weatherElement, moment, fetchData, setCurrentPage, cityName } = props;
+  const { weatherElement, moment: dayMoment, fetchData, setCurrentPage, cityName } = props;
   const {
     observationTime,
     temperature,
@@ -124,7 +125,7 @@ const WeatherCard = props => {
     description,
     weatherCode,
     rainPossibility,
-    comfortability,
+    comfort,
     isLoading
   } = weatherElement;
 
@@ -133,7 +134,7 @@ const WeatherCard = props => {
       <Cog onClick={() => setCurrentPage("WeatherSetting")} />
       <Location>{cityName}</Location>
       <Description>
-        {description}，{comfortability}
+        {description}，{comfort}
       </Description>
       <CurrentWeather>
         <Temperature>
@@ -141,7 +142,7 @@ const WeatherCard = props => {
         </Temperature>
         <WeatherIcon
           currentWeatherCode={weatherCode}
-          moment={moment || "day"}
+          moment={dayMoment || "day"}
         />
       </CurrentWeather>
       <AirFlow>
@@ -154,10 +155,11 @@ const WeatherCard = props => {
       </Rain>
       <Refresh onClick={fetchData} isLoading={isLoading}>
         最後觀測時間：
-        {new Intl.DateTimeFormat("zh-TW", {
-          hour: "numeric",
-          minute: "numeric"
-        }).format(new Date(observationTime))}
+        {new Intl.DateTimeFormat('zh-TW', {
+          hour: 'numeric',
+          minute: 'numeric',
+        }).format(dayjs(observationTime))}{' '}
+        {/* {moment(observationTime).format('a h:mm')} */}
         {isLoading ? <LoadingIcon /> : <RefreshIcon />}
       </Refresh>
     </WeatherCardWrapper>

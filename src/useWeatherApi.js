@@ -48,7 +48,7 @@ const fetchWeatherForecast = cityName => {
         description: weatherElements.Wx.parameterName,
         weatherCode: weatherElements.Wx.parameterValue,
         rainPossibility: weatherElements.PoP.parameterName,
-        comfortability: weatherElements.CI.parameterName
+        comfort: weatherElements.CI.parameterName
       };
     });
 };
@@ -64,7 +64,7 @@ const useWeatherApi = currentLocation => {
     description: "",
     weatherCode: 0,
     rainPossibility: 0,
-    comfortability: 0,
+    comfort: 0,
     isLoading: true
   });
 
