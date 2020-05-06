@@ -135,8 +135,6 @@ const WeatherSetting = props => {
     const themeStyle = themeStyleRef.current.value;
 
     if (locations.includes(locationName)) {
-      console.log(`Location: ${locationName}`);
-      console.log(`Theme: ${themeStyle}`);
       setCurrentCity(locationName);
       setCurrentTheme(themeStyle);
       setCurrentPage("WeatherCard");

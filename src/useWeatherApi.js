@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import moment from 'moment';
 
 const fetchCurrentWeather = locationName => {
   return fetch(
@@ -56,7 +57,7 @@ const fetchWeatherForecast = cityName => {
 const useWeatherApi = currentLocation => {
   const { locationName, cityName } = currentLocation;
   const [weatherElement, setWeatherElement] = useState({
-    observationTime: new Date(),
+    observationTime: moment().format('YYYY-MM-DD h:mm:ss'),
     locationName: "",
     humid: 0,
     temperature: 0,
